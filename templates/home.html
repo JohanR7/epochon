@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Reset and Font Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    padding: 20px 10%;
+    background-color: #f8f9fa;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-image {
+    height: 50px;
+    width: auto;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* Hero Section */
+.hero {
+    height: 80vh;
+    background: url("{{ url_for('static', filename='images/land.jpg') }}") no-repeat center center/cover;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+ 
+
+button {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.9rem 2rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 500px;
+    overflow: hidden;
+    background: #66ff66;
+    color: ghostwhite;
+   }
+   
+   button span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+   }
+   
+   button:hover span {
+    color: rgb(2, 13, 5);
+   }
+   
+   button::before,
+   button::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+   }
+   
+   button::before {
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+   }
+   
+   button:hover::before {
+    transform: translate3d(100%, 0, 0);
+   }
+   
+
+/* About Us Section */
+.about-us-container {
+    margin-top: 20px;
+    padding: 40px 20%;
+    background: url("{{ url_for('static', filename='images/orang.jpg') }}") no-repeat center center/cover;
+    background-size: cover;
+    font-family: "Poppins", sans-serif;
+}
+
+
+.about-us {
+
+    text-align: center;
+    color: white;
+}
+
+.about-us h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* Features Section */
+.features {
+    padding: 50px 10%;
+    text-align: center;
+    background-color: #f8f9fa;
+    
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+   
+}
+
+.feature-card1 {
+    background: rgb(5, 2, 2);
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    color:white;
+
+}
+.feature-card2 {
+    background: rgb(5, 2, 2);
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.768);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    color:white;
+}
+
+.feature-card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+    
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #555;
+}
+.footer{
+    background-color: #333;
+    text-align:center;
+    height:40px;
+    color:#f8f9fa
+}
+
+
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthworm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/earthworm.jpg') }}" alt="Earthworm AI">
+
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="cta-container">
+                <div class="hero-content">
+                    <h1>Empowering Farmers with Data-Driven Insights!</h1>
+                    <p>Discover the best crops and farming methods tailored to your land.</p>
+                    <a href="/input-form">
+                        <button>
+                            <span>Get Started</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <!-- About Us Section -->
+    <section class="about-us-container" id="about">
+        <div class="about-us">
+            <h2>About Us</h2>
+            <p>
+                earthworm is a platform dedicated to empowering farmers with 
+                data-driven insights to enhance agricultural productivity. We provide 
+                tailored solutions to help farmers make informed decisions about crops, 
+                fertilizers, and farming methods.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Features</h2>
+        <div class="feature-cards">
+            <div class="feature-card1">
+                <h3>Crop Recommendation</h3>
+                <p>Identify the best crops for your soil type and climate.</p>
+            </div>
+            <div class="feature-card2">
+                <h3>Fertilizer Prediction</h3>
+                <p>Optimize farming with precise weather-based fertilizer advice.</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2024 earthworm. All rights reserved.</p>
+    </footer>
+</body>
+</html> */

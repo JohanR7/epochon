@@ -6,7 +6,109 @@
     <title>Crop & Fertilizer Recommendation</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
 
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.chat-container {
+    width: 100%;
+}
+
+.chat-history {
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+}
+
+.chat-message.user {
+    text-align: right;
+}
+
+.chat-message.bot {
+    text-align: left;
+    font-style: italic;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    background: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reset-button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
         * {
             padding: 0;
             margin: 0;
@@ -85,6 +187,22 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            
+        }
+        .btnn {
+            position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+            width: 400px;
+            height: 50px;
+            background-color: rgb(7, 165, 28);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
         .btn:hover {
             background-color: #5a005a;
@@ -153,11 +271,28 @@
                     <input type="text" id="district" placeholder="District" name="district" required class="farmer-inputs">
                 </div>
                 <button type="submit" class="btn">Get Recommendation</button>
+                <button type="button" class="btnn" onclick="openChat()">Chat with Earthworm AI</button>
+
+
+
             </div>
         </form>
     </div>
-
+    <div id="chatModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeChat()">&times;</span>
+        <div class="chat-container">
+            <div class="chat-history" id="chatHistory"></div>
+            <div class="chat-input">
+                <input type="text" id="userMessage" placeholder="Type your message here...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <button class="reset-button" onclick="resetChat()">Reset Chat</button>
+        </div>
+    </div>
+</div>
     <script>
+        
         const form = document.getElementById('recommendationForm');
 
         form.addEventListener('submit', async (event) => {
@@ -166,7 +301,6 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Open a new window for results
             const resultsWindow = window.open('', 'Recommendations', 'width=600,height=500');
             resultsWindow.document.write(`
                 <html>
@@ -244,6 +378,7 @@
                                 <p>${result.fertilizer}</p>
                             </div>
                             <button class="back-btn" onclick="window.close()">Back to Input</button>
+                            
                         </div>
                     `;
                 } else {
@@ -265,6 +400,78 @@
                 `;
             }
         });
+        function openChat() {
+    document.getElementById("chatModal").style.display = "block";
+}
+
+function closeChat() {
+    document.getElementById("chatModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("chatModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+async function sendMessage() {
+    const userMessageInput = document.getElementById("userMessage");
+    const chatHistory = document.getElementById("chatHistory");
+    const message = userMessageInput.value.trim();
+
+    if (!message) return;
+
+    const userDiv = document.createElement("div");
+    userDiv.className = "chat-message user";
+    userDiv.textContent = message;
+    chatHistory.appendChild(userDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+    userMessageInput.value = "";
+
+    try {
+        const response = await fetch('/send_message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        const botDiv = document.createElement("div");
+        botDiv.className = "chat-message bot";
+        botDiv.textContent = data.success ? data.message : `Error: ${data.message}`;
+        chatHistory.appendChild(botDiv);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    } catch {
+        const botDiv = document.createElement("div");
+        botDiv.className = "chat-message bot";
+        botDiv.textContent = "An error occurred while sending the message.";
+        chatHistory.appendChild(botDiv);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+}
+
+async function resetChat() {
+    const chatHistory = document.getElementById("chatHistory");
+
+    try {
+        const response = await fetch('/reset_chat', { method: 'POST' });
+        const data = await response.json();
+
+        if (data.success) {
+            chatHistory.innerHTML = "";
+            const botDiv = document.createElement("div");
+            botDiv.className = "chat-message bot";
+            botDiv.textContent = "Chat reset successfully.";
+            chatHistory.appendChild(botDiv);
+        } else {
+            alert("Failed to reset chat.");
+        }
+    } catch {
+        alert("An error occurred while resetting the chat.");
+    }
+}
     </script>
 </body>
 </html>

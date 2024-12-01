@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthworm AI Chat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f4f4f9;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .chat-history {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .chat-message.user {
+            text-align: right;
+        }
+        .chat-message.bot {
+            text-align: left;
+            font-style: italic;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            padding: 10px 20px;
+            background: purple;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reset-button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-history" id="chatHistory"></div>
+        <div class="chat-input">
+            <input type="text" id="userMessage" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <button class="reset-button" onclick="resetChat()">Reset Chat</button>
+    </div>
+
+    <script>
+        const chatHistory = document.getElementById('chatHistory');
+        const userMessageInput = document.getElementById('userMessage');
+
+        function appendMessage(message, role) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message ${role}`;
+            messageElement.textContent = message;
+            chatHistory.appendChild(messageElement);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = userMessageInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, 'user');
+            userMessageInput.value = '';
+
+            try {
+                const response = await fetch('/send_message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message }),
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    appendMessage(data.message, 'bot');
+                } else {
+                    appendMessage(`Error: ${data.message}`, 'bot');
+                }
+            } catch (error) {
+                appendMessage('An error occurred while sending the message.', 'bot');
+            }
+        }
+
+        async function resetChat() {
+            try {
+                const response = await fetch('/reset_chat', { method: 'POST' });
+                const data = await response.json();
+
+                if (data.success) {
+                    chatHistory.innerHTML = '';
+                    appendMessage('Chat reset successfully.', 'bot');
+                } else {
+                    appendMessage('Failed to reset chat.', 'bot');
+                }
+            } catch {
+                appendMessage('An error occurred while resetting the chat.', 'bot');
+            }
+        }
+    </script>
+</body>
+</html>
