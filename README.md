@@ -5,7 +5,8 @@ Agriculture faces significant challenges in optimizing crop yield and soil healt
 This gap results in suboptimal agricultural productivity, overuse of chemical fertilizers, degradation of soil quality, and increased environmental impact. To address these challenges, Earthworm provides an easy-to-use, intelligent system that delivers tailored recommendations for crop selection and fertilizer application based on key input constraints such as soil properties, weather conditions, and sustainability metrics.
 # Problem Overview
 
-![image](https://github.com/user-attachments/assets/c153b894-de12-4069-b9c0-7a7b9eceea22)
+![logo](stati/images/earthworm.jpg)
+
 <br/>
 
 
@@ -33,17 +34,16 @@ The data used to train the model was collected from the [Fertiliser Prediction](
 
 The  models are built using Deep Neural Networks(DNNs). 
 <br/>
-![Model Architecture](images/crop_model.jpeg)
 The architecture we have chosen for crop prediction consists of 3 hidden layers with 128, 64 and 128 neurons respectively, and an output layer of 22 neurons, each corresponding to one type of crop. The activation function in the input and hidden layers is SeLU, while the activation function for the output layer is softmax. 
 <br/>
-![Screenshot 2024-12-01 at 3 59 51 PM](https://github.com/user-attachments/assets/7c58c124-a1c5-4baf-a5c3-b1081ba67dd7)
+![neural network](https://github.com/user-attachments/assets/7c58c124-a1c5-4baf-a5c3-b1081ba67dd7)
 <br/>
 
 
 
 The architecture chosen for fertiliser prediction consistes of two layers with 128 and 64 neurons respectively and an output layer of 7 neurons each corresponding to each fertiliser. The activation function used in hidden layers is SeLU and softmax in the output layer.
 <br/>
-![Screenshot 2024-12-01 at 4 00 22 PM](https://github.com/user-attachments/assets/fff72f25-02e7-425b-a027-ad7e2f12c39a)
+![neural network](https://github.com/user-attachments/assets/fff72f25-02e7-425b-a027-ad7e2f12c39a)
 <br/>
 The model was created using Tensorflow and Keras.
 
