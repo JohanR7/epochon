@@ -5,7 +5,8 @@ Agriculture faces significant challenges in optimizing crop yield and soil healt
 This gap results in suboptimal agricultural productivity, overuse of chemical fertilizers, degradation of soil quality, and increased environmental impact. To address these challenges, Earthworm provides an easy-to-use, intelligent system that delivers tailored recommendations for crop selection and fertilizer application based on key input constraints such as soil properties, weather conditions, and sustainability metrics.
 # Problem Overview
 
-![image](https://github.com/user-attachments/assets/c153b894-de12-4069-b9c0-7a7b9eceea22)
+![logo](stati/images/earthworm.jpg)
+
 <br/>
 
 
@@ -35,14 +36,14 @@ The  models are built using Deep Neural Networks(DNNs).
 <br/>
 The architecture we have chosen for crop prediction consists of 3 hidden layers with 128, 64 and 128 neurons respectively, and an output layer of 22 neurons, each corresponding to one type of crop. The activation function in the input and hidden layers is SeLU, while the activation function for the output layer is softmax. 
 <br/>
-![Screenshot 2024-12-01 at 3 59 51 PM](https://github.com/user-attachments/assets/7c58c124-a1c5-4baf-a5c3-b1081ba67dd7)
+![neural network](https://github.com/user-attachments/assets/7c58c124-a1c5-4baf-a5c3-b1081ba67dd7)
 <br/>
 
 
 
 The architecture chosen for fertiliser prediction consistes of two layers with 128 and 64 neurons respectively and an output layer of 7 neurons each corresponding to each fertiliser. The activation function used in hidden layers is SeLU and softmax in the output layer.
 <br/>
-![Screenshot 2024-12-01 at 4 00 22 PM](https://github.com/user-attachments/assets/fff72f25-02e7-425b-a027-ad7e2f12c39a)
+![neural network](https://github.com/user-attachments/assets/fff72f25-02e7-425b-a027-ad7e2f12c39a)
 <br/>
 The model was created using Tensorflow and Keras.
 
@@ -55,12 +56,12 @@ The model was trained on the data with a 80:20 train-test split ratio. The objec
 
 For crop prediction, our model got a 99% accuracy on train data and 97% accuracy on test data.
 <br/>
-![Screenshot 2024-12-01 at 6 43 41 PM](https://github.com/user-attachments/assets/1591ed7c-a054-4e5e-b5cb-4a812942dbba)
+![accuracy](images/crop_model.jpeg)
 <br/>
 
 For fertiliser prediction our model got a 100% accuracy on both train and accuracy data.
 <br/>
-![Screenshot 2024-12-01 at 6 44 23 PM](https://github.com/user-attachments/assets/a2ca48d7-8f71-4d4d-ae2f-152a1b12de48)
+![accuracy](images/fert_model.jpeg)
 <br/>
 
 ## Chatbot
@@ -76,15 +77,15 @@ N, P, K, pH, temperature, humidity, moisture%, rainfall, location.
 <br/>
 Further, we have created an interactive interface for users to enter relevant data to get predictions for their crop.
 <br/>
-![image](https://github.com/user-attachments/assets/ea5d2f40-022c-4b27-9f8a-148903366843)
+![home](images/home.jpeg)
 <br/>
-![image](https://github.com/user-attachments/assets/e561e8e7-67bb-4548-8dde-1c6eea01fed7)
+![input](images/inp.jpeg)
 <br/>
-![image](https://github.com/user-attachments/assets/1859300a-e781-4ae6-95af-604f54225a7c)
+![accuracy](images/pred.jpeg)
 <br/>
-![image](https://github.com/user-attachments/assets/1df9f58a-d851-49be-aaef-f9add837f371)
+![accuracy](images/chat1.jpeg)
 <br/>
-![image](https://github.com/user-attachments/assets/fcbda7b4-49e5-4ccf-be51-cffa27cbcb2a)
+![accuracy](images/chat2.jpeg)
 <br/>
 
 # Future Implementation
