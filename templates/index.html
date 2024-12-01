@@ -7,81 +7,96 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins";
-    font-weight: 400;
-}
-body {
-    background: linear-gradient(#ffdad5, #fff7f9);
-}
-.container {
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.form-inputs {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    gap: 20px;
-}
-.inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 20px;
-}
-.heading h2 {
-    font-weight: 700;
-    color: purple;
-    font-size: 40px;
-    margin-bottom: 5px;
-}
-.heading hr {
-    border: none;
-    width: 120px;
-    height: 5px;
-    background-color: aliceblue;
-    border-radius: 18px;
-    margin-bottom: 28px;
-}
-.farmer-inputs {
-    width: 400px;
-    height: 50px;
-    border: none;
-    outline: none;
-    padding-left: 25px;
-    font-weight: 500;
-    color: #666;
-    border-radius: 50px;
-
-}
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    /* To wrap to a new line on smaller screens */
-}
-
-.inputs {
-    flex: 1;
-    /* Equal width for each section */
-    margin: 10px;
-    /* Adjust margin as needed */
-}
-
-/* Optional: Media query for smaller screens */
-@media (max-width: 768px) {
-    .inputs {
-        flex: 100%;
-        /* Make each section full width on smaller screens */
-    }
-}
-
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+            font-weight: 400;
+        }
+        body {
+            background: linear-gradient(#ffdad5, #fff7f9);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .form-inputs {
+            display: flex;
+            flex-direction: row;
+            align-items: start;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 20px;
+        }
+        .heading h2 {
+            font-weight: 700;
+            color: purple;
+            font-size: 40px;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+        .heading hr {
+            border: none;
+            width: 120px;
+            height: 5px;
+            background-color: purple;
+            border-radius: 18px;
+            margin-bottom: 28px;
+        }
+        .farmer-inputs {
+            width: 400px;
+            height: 50px;
+            border: 1px solid #ddd;
+            outline: none;
+            padding-left: 25px;
+            font-weight: 500;
+            color: #666;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .farmer-inputs:focus {
+            border-color: purple;
+            box-shadow: 0 0 10px rgba(128, 0, 128, 0.1);
+        }
+        .btn {
+            width: 400px;
+            height: 50px;
+            background-color: purple;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #5a005a;
+        }
+        @media (max-width: 768px) {
+            .form-inputs {
+                flex-direction: column;
+            }
+            .farmer-inputs, .btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -94,23 +109,22 @@ body {
                     <hr>
                 </div>
                 <div class="form-group">
-                <input type="number" id="nitrogen" name="nitrogen" placeholder="Nitrogen Content"  required class="farmer-inputs">
-            
+                    <input type="number" id="nitrogen" name="nitrogen" placeholder="Nitrogen Content" required class="farmer-inputs">
                 </div>
                 <div class="form-group">
-                <input type="number" id="phosphorus" name="phosphorus" placeholder="Phosphorus Content" required class="farmer-inputs">
+                    <input type="number" id="phosphorus" name="phosphorus" placeholder="Phosphorus Content" required class="farmer-inputs">
                 </div>
                 <div class="form-group">
-                <input type="number" id="potassium" name="potassium" placeholder="Pottassium Content"  required class="farmer-inputs">
+                    <input type="number" id="potassium" name="potassium" placeholder="Potassium Content" required class="farmer-inputs">
                 </div>
                 <div class="form-group">
-                <input type="number" step="0.1" id="temperature"  placeholder="Temperature" name="temperature" class="farmer-inputs">
+                    <input type="number" step="0.1" id="temperature" placeholder="Temperature" name="temperature" class="farmer-inputs">
                 </div>
                 <div class="form-group">
-                <input type="number" step="0.1" id="humidity" placeholder="Humidity"  name="humidity" required class="farmer-inputs">
+                    <input type="number" step="0.1" id="humidity" placeholder="Humidity" name="humidity" required class="farmer-inputs">
                 </div>
                 <div class="form-group">
-                <input type="number" step="0.1" id="ph" name="ph"   placeholder="pH Value" required class="farmer-inputs">
+                    <input type="number" step="0.1" id="ph" name="ph" placeholder="pH Value" required class="farmer-inputs">
                 </div>
             </div>
             <div class="inputs">
@@ -122,9 +136,8 @@ body {
                 <div class="form-group">
                     <input type="number" step="0.1" id="rainfall" placeholder="Rainfall" name="rainfall" required class="farmer-inputs">
                 </div>
-
                 <div class="form-group">
-                    <input type="number" step="0.1" id="moisture" placeholder="Moisture Content"  name="moisture" required class="farmer-inputs">
+                    <input type="number" step="0.1" id="moisture" placeholder="Moisture Content" name="moisture" required class="farmer-inputs">
                 </div>
             </div>
             <div class="inputs">
@@ -133,21 +146,19 @@ body {
                     <h2>Location</h2>
                     <hr>
                 </div>
-            <div class="form-group">
-                <input type="text" id="state" placeholder="State"  name="state" required class="farmer-inputs">
-            </div>
-            <div class="form-group">
-                <input type="text" id="district" placeholder="District"  name="district" required class="farmer-inputs">
-            </div>
-            <button type="submit" class="btn">Get Recommendation</button>
+                <div class="form-group">
+                    <input type="text" id="state" placeholder="State" name="state" required class="farmer-inputs">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="district" placeholder="District" name="district" required class="farmer-inputs">
+                </div>
+                <button type="submit" class="btn">Get Recommendation</button>
             </div>
         </form>
-        <div id="result" class="result" style="display: none;"></div>
     </div>
 
     <script>
         const form = document.getElementById('recommendationForm');
-        const resultDiv = document.getElementById('result');
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -155,24 +166,103 @@ body {
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch('/recommend', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+            // Open a new window for results
+            const resultsWindow = window.open('', 'Recommendations', 'width=600,height=500');
+            resultsWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Recommendations</title>
+                        <style>
+                            body {
+                                font-family: 'Poppins', sans-serif;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                min-height: 100vh;
+                                margin: 0;
+                                background: linear-gradient(#ffdad5, #fff7f9);
+                            }
+                            .result-container {
+                                background: white;
+                                padding: 30px;
+                                border-radius: 15px;
+                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                text-align: center;
+                                max-width: 500px;
+                                width: 100%;
+                            }
+                            .recommendation {
+                                margin: 15px 0;
+                                padding: 15px;
+                                background: #f9f9f9;
+                                border-radius: 10px;
+                            }
+                            .back-btn {
+                                margin-top: 20px;
+                                padding: 10px 20px;
+                                background-color: purple;
+                                color: white;
+                                border: none;
+                                border-radius: 50px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                            }
+                            .back-btn:hover {
+                                background-color: #5a005a;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="result-container">
+                            <h1>Your Recommendations</h1>
+                            <div id="loading">Loading recommendations...</div>
+                        </div>
+                    </body>
+                </html>
+            `);
 
-            if (response.ok) {
-                const result = await response.json();
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <strong>Recommended Crop:</strong> ${result.crop}<br>
-                    <strong>Recommended Fertilizer:</strong> ${result.fertilizer}
+            try {
+                const response = await fetch('/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    resultsWindow.document.body.innerHTML = `
+                        <div class="result-container">
+                            <h1>Your Recommendations</h1>
+                            <div class="recommendation">
+                                <h2>Recommended Crop</h2>
+                                <p>${result.crop}</p>
+                            </div>
+                            <div class="recommendation">
+                                <h2>Recommended Fertilizer</h2>
+                                <p>${result.fertilizer}</p>
+                            </div>
+                            <button class="back-btn" onclick="window.close()">Back to Input</button>
+                        </div>
+                    `;
+                } else {
+                    resultsWindow.document.body.innerHTML = `
+                        <div class="result-container">
+                            <h1>Error</h1>
+                            <p>Unable to get recommendation</p>
+                            <button class="back-btn" onclick="window.close()">Back to Input</button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsWindow.document.body.innerHTML = `
+                    <div class="result-container">
+                        <h1>Network Error</h1>
+                        <p>Could not fetch recommendations</p>
+                        <button class="back-btn" onclick="window.close()">Back to Input</button>
+                    </div>
                 `;
-            } else {
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `<strong>Error:</strong> Unable to get recommendation.`;
             }
         });
     </script>

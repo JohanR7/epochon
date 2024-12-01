@@ -5,27 +5,27 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 import os
 
-# Define base directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "model")
 PKL_DIR = os.path.join(MODEL_DIR, "pkl_files")
 NORMALIZATION_DIR = os.path.join(MODEL_DIR, "normalization")
 
-# Load Models and Files
-model_path = os.path.join(MODEL_DIR, "2024-12-01_09-54-32-crop.h5")  # Change to your file name
+# Load crop model
+model_path = os.path.join(MODEL_DIR, "2024-12-01_09-54-32-crop.h5") 
 model = load_model(model_path)
 
-fertilizer_model_path = os.path.join(MODEL_DIR, "2024-12-01_09-51-29-fertilizer.h5")  # Change to your file name
+# Load fertilizer model
+fertilizer_model_path = os.path.join(MODEL_DIR, "2024-12-01_09-51-29-fertilizer.h5")  
 fertilizer_model = load_model(fertilizer_model_path)
 
-# Load Label Encoders
+# Load encoders
 with open(os.path.join(PKL_DIR, "encoder.pkl"), 'rb') as file:
     encoder = pickle.load(file)
 
 with open(os.path.join(PKL_DIR, "fertilizer_encoder.pkl"), 'rb') as file:
     fertilizer_encoder = pickle.load(file)
 
-# Load Normalization Parameters
+# Load normalization parameters
 crop_normalization = np.load(os.path.join(NORMALIZATION_DIR, "normalization.npz"))
 crop_scaler = StandardScaler()
 crop_scaler.mean_ = crop_normalization['mean']
@@ -36,7 +36,6 @@ fertilizer_scaler = StandardScaler()
 fertilizer_scaler.mean_ = fertilizer_normalization['mean']
 fertilizer_scaler.scale_ = fertilizer_normalization['std']
 
-# Initialize Flask App
 app = Flask(__name__)
 
 @app.route("/")
@@ -46,11 +45,9 @@ def index():
 @app.route('/recommend', methods=['POST'])
 def recommend():
     try:
-        # Parse input data
         data = request.json
-        print("Received data:", data)
 
-        # Crop Prediction
+        # Crop recommendation
         crop_input_features = np.array([[float(data.get(key)) for key in [
             'nitrogen', 'phosphorus', 'potassium', 'temperature', 'humidity', 'ph', 'rainfall'
         ]]])
@@ -59,7 +56,7 @@ def recommend():
         crop_class_index = np.argmax(crop_predictions, axis=1)
         crop = encoder.inverse_transform(crop_class_index)[0]
 
-        # Fertilizer Prediction
+        # Fertilizer recommendation
         fertilizer_input_features = np.array([[float(data.get(key)) for key in [
             'nitrogen', 'phosphorus', 'potassium', 'temperature', 'humidity', 'moisture'
         ]]])
@@ -71,14 +68,27 @@ def recommend():
         return jsonify({"crop": crop, "fertilizer": fertilizer})
 
     except KeyError as e:
-        print(f"Missing key: {e}")
         return jsonify({"error": f"Missing key: {str(e)}"}), 400
     except ValueError as e:
-        print(f"Invalid value: {e}")
         return jsonify({"error": f"Invalid value: {str(e)}"}), 400
     except Exception as e:
-        print(f"Unexpected error: {e}")
         return jsonify({"error": "An unexpected error occurred"}), 500
+
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    """
+    Chatbot endpoint to provide a conversation-like interface.
+    """
+    try:
+        message = request.json.get('message', '').lower()
+        if 'recommend crop' in message or 'crop' in message:
+            return jsonify({"response": "Please provide the following details: nitrogen, phosphorus, potassium, temperature, humidity, pH, and rainfall."})
+        elif 'recommend fertilizer' in message or 'fertilizer' in message:
+            return jsonify({"response": "Please provide the following details: nitrogen, phosphorus, potassium, temperature, humidity, and moisture."})
+        else:
+            return jsonify({"response": "I can help with crop and fertilizer recommendations. Ask me about them!"})
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred in the chatbot"}), 500
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True, use_reloader=False)
